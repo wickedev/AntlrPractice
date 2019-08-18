@@ -2,7 +2,7 @@ import java.util.HashMap
 
 class EvalVisitor(private val results: MutableList<Int>) : LabeledExprBaseVisitor<Int>() {
     /** "memory" for our calculator; variable/value pairs go here  */
-    internal var memory: MutableMap<String, Int> = HashMap()
+    private var memory: MutableMap<String, Int> = HashMap()
 
     /** ID '=' expr NEWLINE  */
     override fun visitAssign(ctx: LabeledExprParser.AssignContext): Int? {
