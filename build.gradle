@@ -35,5 +35,9 @@ test {
     }
 }
 
+generateGrammarSource {
+    arguments += ["-visitor"]
+}
+
 [compileJava, compileKotlin]*.dependsOn generateGrammarSource
 [compileTestJava, compileTestKotlin]*.dependsOn generateTestGrammarSource

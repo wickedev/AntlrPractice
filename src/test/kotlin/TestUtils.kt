@@ -4,6 +4,6 @@ import java.io.ByteArrayInputStream
 import java.nio.charset.StandardCharsets
 
 fun String.toCharStream(): CharStream {
-    val stream = ByteArrayInputStream(this.trimMargin().toByteArray())
+    val stream = ByteArrayInputStream(this.toByteArray())
     return CharStreams.fromStream(stream, StandardCharsets.UTF_8)
 }
