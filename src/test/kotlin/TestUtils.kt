@@ -10,6 +10,10 @@ fun String.toCharStream(): CharStream {
     return CharStreams.fromStream(stream, StandardCharsets.UTF_8)
 }
 
+fun String.space4(): String {
+    return replace("\t", "    ")
+}
+
 fun readTestResourceAsString(filePath: String): String {
     return TestUtils::class.java.getResource(filePath).readText()
 }

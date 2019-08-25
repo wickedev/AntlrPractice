@@ -61,8 +61,8 @@ class Chapter4 : Spek({
             val walker = ParseTreeWalker()
             val extractor = ExtractInterfaceListener(parser)
             walker.walk(extractor, tree)
-            val result = extractor.getInterfaceString()
-            result.should.be.equal(expect)
+            val result = extractor.getInterfaceString().space4()
+            result.should.be.contain(expect)
         }
     }
 
@@ -118,9 +118,26 @@ class Chapter4 : Spek({
             val lexer = XMLLexer(input.toCharStream())
             val tokens = CommonTokenStream(lexer)
             tokens.fill()
-
             val result = tokens.tokens.map { it.toString() }
                 .reduce { acc, token -> "$acc\n" + token }
+            result.should.be.contain(expect)
+        }
+    }
+
+    describe("Rewrite Input Stream") {
+        it("insert serialVersion field on class body") {
+            val input = readTestResourceAsString("Demo.java")
+            val expect = readTestResourceAsString("RewriteDemoExpect.java")
+
+            val lexer = JavaLexer(input.toCharStream())
+            val tokens = CommonTokenStream(lexer)
+            val parser = JavaParser(tokens)
+            val tree = parser.compilationUnit() // parse
+
+            val walker = ParseTreeWalker()
+            val extractor = InsertSerialIDListener(tokens)
+            walker.walk(extractor, tree)
+            val result = extractor.reWriter.text.space4()
             result.should.be.contain(expect)
         }
     }

@@ -10,12 +10,8 @@ class ExtractInterfaceListener(
         sb.append("${parser.tokenStream.getText(ctx)}\n")
     }
 
-    override fun exitImportDeclaration(ctx: JavaParser.ImportDeclarationContext?) {
-        sb.append("\n\n")
-    }
-
     override fun enterClassDeclaration(ctx: JavaParser.ClassDeclarationContext) {
-        sb.append("interface I${ctx.Identifier()} {\n")
+        sb.append("\ninterface I${ctx.Identifier()} {\n")
     }
 
     override fun exitClassDeclaration(ctx: JavaParser.ClassDeclarationContext?) {
