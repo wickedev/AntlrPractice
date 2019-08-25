@@ -1,8 +1,10 @@
 import com.winterbe.expekt.should
 import org.antlr.v4.runtime.CommonTokenStream
+import org.antlr.v4.runtime.Token
 import org.antlr.v4.runtime.tree.ParseTreeWalker
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
+import java.lang.StringBuilder
 
 class Chapter4 : Spek({
     describe("ExprJoyRide") {
@@ -106,6 +108,20 @@ class Chapter4 : Spek({
             val result = tree.toStringTree(parser)
             println(result)
             result.should.be.equal("(file (group 2 (sequence 9 10)) (group 3 (sequence 1 2 3)))")
+        }
+    }
+
+    describe("XML Lexer") {
+        it("lexing tokens correctly") {
+            val input = readTestResourceAsString("t.xml")
+            val expect = readTestResourceAsString("t.expect")
+            val lexer = XMLLexer(input.toCharStream())
+            val tokens = CommonTokenStream(lexer)
+            tokens.fill()
+
+            val result = tokens.tokens.map { it.toString() }
+                .reduce { acc, token -> "$acc\n" + token }
+            result.should.be.contain(expect)
         }
     }
 })
