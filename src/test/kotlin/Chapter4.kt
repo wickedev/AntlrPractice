@@ -1,8 +1,8 @@
 import com.winterbe.expekt.should
 import org.antlr.v4.runtime.CommonTokenStream
+import org.antlr.v4.runtime.tree.ParseTreeWalker
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
-import java.lang.StringBuilder
 
 class Chapter4 : Spek({
     describe("ExprJoyRide") {
@@ -43,6 +43,24 @@ class Chapter4 : Spek({
             val eval = EvalVisitor(results)
             eval.visit(tree)
             results.should.be.equal(listOf(193, 17, 9))
+        }
+    }
+
+    describe("Demo") {
+        it("interface parsing correctly") {
+            val input = readTestResourceAsString("Demo.java")
+            val expect = readTestResourceAsString("DemoExpect.java")
+
+            val lexer = JavaLexer(input.toCharStream())
+            val tokens = CommonTokenStream(lexer)
+            val parser = JavaParser(tokens)
+            val tree = parser.compilationUnit() // parse
+
+            val walker = ParseTreeWalker()
+            val extractor = ExtractInterfaceListener(parser)
+            walker.walk(extractor, tree)
+            val result = extractor.getInterfaceString()
+            result.should.be.equal(expect)
         }
     }
 })
