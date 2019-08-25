@@ -94,4 +94,18 @@ class Chapter4 : Spek({
             parser.list.should.be.equal(listOf("101", "020", "008"))
         }
     }
+
+    describe("Semantic Predicates") {
+        it("data grouping sequentially") {
+            val input = "2 9 10 3 1 2 3"
+            val lexer = DataLexer(input.toCharStream())
+            val tokens = CommonTokenStream(lexer)
+            val parser = DataParser(tokens)
+
+            val tree = parser.file()
+            val result = tree.toStringTree(parser)
+            println(result)
+            result.should.be.equal("(file (group 2 (sequence 9 10)) (group 3 (sequence 1 2 3)))")
+        }
+    }
 })
