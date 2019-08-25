@@ -63,4 +63,35 @@ class Chapter4 : Spek({
             result.should.be.equal(expect)
         }
     }
+
+    describe("Insert Grammar") {
+        val rows = "parrt\tTerence Parr\t101\ntombu\tTom Burns\t020\nbke\tKevin Edgar\t008\n"
+
+        it("get col 1 correctly") {
+            val lexer = RowsLexer(rows.toCharStream())
+            val tokens = CommonTokenStream(lexer)
+            val parser = RowsParser(tokens, 1)
+            parser.buildParseTree = false
+            parser.file()
+            parser.list.should.be.equal(listOf("parrt", "tombu", "bke"))
+        }
+
+        it("get col 1 correctly") {
+            val lexer = RowsLexer(rows.toCharStream())
+            val tokens = CommonTokenStream(lexer)
+            val parser = RowsParser(tokens, 2)
+            parser.buildParseTree = false
+            parser.file()
+            parser.list.should.be.equal(listOf("Terence Parr", "Tom Burns", "Kevin Edgar"))
+        }
+
+        it("get col 1 correctly") {
+            val lexer = RowsLexer(rows.toCharStream())
+            val tokens = CommonTokenStream(lexer)
+            val parser = RowsParser(tokens, 3)
+            parser.buildParseTree = false
+            parser.file()
+            parser.list.should.be.equal(listOf("101", "020", "008"))
+        }
+    }
 })
