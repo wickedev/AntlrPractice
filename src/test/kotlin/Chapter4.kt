@@ -1,10 +1,8 @@
 import com.winterbe.expekt.should
 import org.antlr.v4.runtime.CommonTokenStream
-import org.antlr.v4.runtime.Token
 import org.antlr.v4.runtime.tree.ParseTreeWalker
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
-import java.lang.StringBuilder
 
 class Chapter4 : Spek({
     describe("ExprJoyRide") {
@@ -61,7 +59,7 @@ class Chapter4 : Spek({
             val walker = ParseTreeWalker()
             val extractor = ExtractInterfaceListener(parser)
             walker.walk(extractor, tree)
-            val result = extractor.getInterfaceString().space4()
+            val result = extractor.getInterfaceString().replaceSpace4()
             result.should.be.contain(expect)
         }
     }
@@ -137,7 +135,7 @@ class Chapter4 : Spek({
             val walker = ParseTreeWalker()
             val extractor = InsertSerialIDListener(tokens)
             walker.walk(extractor, tree)
-            val result = extractor.reWriter.text.space4()
+            val result = extractor.reWriter.text.replaceSpace4()
             result.should.be.contain(expect)
         }
     }
