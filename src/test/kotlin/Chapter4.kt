@@ -59,7 +59,7 @@ class Chapter4 : Spek({
             val walker = ParseTreeWalker()
             val extractor = ExtractInterfaceListener(parser)
             walker.walk(extractor, tree)
-            val result = extractor.getInterfaceString().replaceSpace4()
+            val result = extractor.getInterfaceString().replaceTapToSpace4()
             result.should.be.contain(expect)
         }
     }
@@ -135,7 +135,7 @@ class Chapter4 : Spek({
             val walker = ParseTreeWalker()
             val extractor = InsertSerialIDListener(tokens)
             walker.walk(extractor, tree)
-            val result = extractor.reWriter.text.replaceSpace4()
+            val result = extractor.reWriter.text.replaceTapToSpace4()
             result.should.be.contain(expect)
         }
     }

@@ -10,7 +10,7 @@ fun String.toCharStream(): CharStream {
     return CharStreams.fromStream(stream, StandardCharsets.UTF_8)
 }
 
-fun String.replaceSpace4(): String {
+fun String.replaceTapToSpace4(): String {
     return replace("\t", "    ")
 }
 
